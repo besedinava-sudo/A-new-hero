@@ -7,13 +7,15 @@
 
 ## Где установлена Android Studio (ваш ПК)
 
-Папка установки:
+**У вас зафиксирован такой путь:** корень Android Studio —
 
 `C:\Program Files\Android\Android Studio`
 
-Внутри неё, для сборки из терминала, обычно используют встроенный JDK (JBR):
+Встроенный JDK для Gradle и терминала (JBR) лежит здесь:
 
 `C:\Program Files\Android\Android Studio\jbr`
+
+Если Studio установите в другую папку — замените оба пути в инструкции и в `scripts\build-debug.ps1` (переменная `$AndroidStudioRoot`).
 
 В Android Studio путь к SDK смотрите в **Settings → Languages & Frameworks → Android SDK** (поле **Android SDK Location**).
 
@@ -63,6 +65,12 @@
 - Данные героев хранятся только в локальной базе Room на устройстве.
 
 ## Уже настроено в этом копии проекта
+
+- Для сборки из терминала можно использовать **JDK 17 (Eclipse Temurin)** — установка одной командой:  
+  `winget install EclipseAdoptium.Temurin.17.JDK -e --accept-package-agreements --accept-source-agreements`  
+  Типичный путь: `C:\Program Files\Eclipse Adoptium\jdk-17.x.x-hotspot`.
+- В профиле Windows пользователя могут быть заданы **`JAVA_HOME`** и **`ANDROID_HOME`** / **`ANDROID_SDK_ROOT`** (после настройки окружения ассистентом) — в новых окнах PowerShell/CMD Gradle найдёт Java и SDK без ручного экспорта.
+- Скрипт **`scripts\build-debug.ps1`** — выставляет `JAVA_HOME`: сначала **JBR** из `C:\Program Files\Android\Android Studio\jbr`, если его нет — **Temurin 17** из `Eclipse Adoptium`; затем `ANDROID_HOME`, `gradlew assembleDebug` и копия APK в **`GeroyBranda-debug.apk`**.
 
 - В корне есть **`gradlew.bat`** / **`gradlew`** и **`gradle/wrapper/`** — можно собирать без отдельной установки Gradle.
 - Файл **`local.properties`** указывает на SDK в `%LOCALAPPDATA%\Android\Sdk` (UTF-8 **без BOM**, иначе Gradle может не увидеть `sdk.dir`).

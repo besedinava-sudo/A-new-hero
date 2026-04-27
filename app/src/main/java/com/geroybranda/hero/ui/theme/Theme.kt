@@ -8,39 +8,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val LightColors = lightColorScheme(
-    primary = IndigoNight,
+    primary = BrandDeepBlue,
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFE8EAF6),
-    onPrimaryContainer = IndigoNight,
-    secondary = MintFresh,
-    onSecondary = Color(0xFF00382E),
-    tertiary = CoralAccent,
+    primaryContainer = Color(0xFFD4E6FA),
+    onPrimaryContainer = BrandDeepBlue,
+    secondary = AccentSoftYellow,
+    onSecondary = OnAccentYellow,
+    secondaryContainer = Color(0xFFFFF2CC),
+    onSecondaryContainer = TextGraphite,
+    tertiary = BrandBlue,
     onTertiary = Color.White,
-    background = SurfaceLight,
-    onBackground = Color(0xFF1B1B1F),
-    surface = CardLight,
-    onSurface = Color(0xFF1B1B1F),
-    surfaceVariant = Color(0xFFE1E2EC),
-    onSurfaceVariant = Color(0xFF444654),
-    outline = Color(0xFF757685)
+    background = MilkBackground,
+    onBackground = TextGraphite,
+    surface = CardSurfaceLight,
+    onSurface = TextGraphite,
+    surfaceVariant = Color(0xFFE6EEF8),
+    onSurfaceVariant = TextMutedLight,
+    surfaceContainerLowest = Color(0xFFEEF3FA),
+    surfaceContainerLow = Color(0xFFF7FAFF),
+    surfaceContainer = CardSurfaceLight,
+    surfaceContainerHigh = Color(0xFFFFFFFF),
+    outline = Color(0xFFC5D0E0),
+    outlineVariant = Color(0xFFE0E7F0),
+    error = Color(0xFFB3261E),
+    onError = Color.White
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFFB8C4FF),
-    onPrimary = Color(0xFF1A237E),
-    primaryContainer = Color(0xFF2F3555),
-    onPrimaryContainer = Color(0xFFE8EAF6),
-    secondary = Color(0xFF63E8CF),
-    onSecondary = Color(0xFF00382E),
-    tertiary = Color(0xFFFF8A80),
-    onTertiary = Color(0xFF5F0D0D),
-    background = SurfaceDark,
-    onBackground = Color(0xFFE4E1E6),
-    surface = CardDark,
-    onSurface = Color(0xFFE4E1E6),
-    surfaceVariant = Color(0xFF46475A),
-    onSurfaceVariant = Color(0xFFC6C5D0),
-    outline = Color(0xFF90909A)
+    primary = DarkAccentBlue,
+    onPrimary = Color(0xFF031525),
+    primaryContainer = Color(0xFF243447),
+    onPrimaryContainer = Color(0xFFD8E9FF),
+    secondary = DarkAccentYellow,
+    onSecondary = Color(0xFF221A00),
+    secondaryContainer = Color(0xFF3D3318),
+    onSecondaryContainer = Color(0xFFFFF0C2),
+    tertiary = Color(0xFF5BA3FF),
+    onTertiary = Color(0xFF001A33),
+    background = DarkNavyBackground,
+    onBackground = Color(0xFFE6EDF8),
+    surface = DarkGraphiteSurface,
+    onSurface = Color(0xFFE6EDF8),
+    surfaceVariant = Color(0xFF2A3548),
+    onSurfaceVariant = Color(0xFFB4C0D4),
+    surfaceContainerLowest = Color(0xFF040D18),
+    surfaceContainerLow = Color(0xFF0E1624),
+    surfaceContainer = DarkGraphiteSurface,
+    surfaceContainerHigh = Color(0xFF1C2636),
+    outline = Color(0xFF4A5A70),
+    outlineVariant = Color(0xFF323F52),
+    error = Color(0xFFFFB4AB),
+    onError = Color(0xFF690005)
 )
 
 @Composable
@@ -60,6 +78,7 @@ fun GeroyBrandaTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = HeroTypography,
+        shapes = HeroShapes,
         content = content
     )
 }

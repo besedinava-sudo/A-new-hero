@@ -1,5 +1,7 @@
 package com.geroybranda.hero.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -7,14 +9,15 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CollectionsBookmark
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.PhotoLibrary
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
@@ -46,10 +49,10 @@ private enum class MainTab(
     val label: String,
     val icon: ImageVector
 ) {
-    HOME("home", "Главная", Icons.Outlined.Home),
-    GALLERY("gallery", "Галерея", Icons.Outlined.CollectionsBookmark),
-    FAVORITES("favorites", "Избранное", Icons.Outlined.FavoriteBorder),
-    SETTINGS("settings", "Настройки", Icons.Outlined.Settings)
+    HOME("home", "Главная", Icons.Rounded.Home),
+    GALLERY("gallery", "Галерея", Icons.Rounded.PhotoLibrary),
+    FAVORITES("favorites", "Избранное", Icons.Rounded.Favorite),
+    SETTINGS("settings", "Настройки", Icons.Rounded.Settings)
 }
 
 @Composable
@@ -67,7 +70,11 @@ fun AppRoot(viewModel: AppViewModel) {
         bottomBar = {
             val backStackEntry by navController.currentBackStackEntryAsState()
             val current = backStackEntry?.destination
-            NavigationBar(tonalElevation = 3.dp) {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                tonalElevation = 3.dp,
+                windowInsets = NavigationBarDefaults.windowInsets
+            ) {
                 MainTab.entries.forEach { tab ->
                     val selected = current?.hierarchy?.any { it.route == tab.route } == true
                     NavigationBarItem(
@@ -81,10 +88,24 @@ fun AppRoot(viewModel: AppViewModel) {
                                 restoreState = true
                             }
                         },
-                        icon = { Icon(tab.icon, contentDescription = null) },
-                        label = { Text(tab.label) },
+                        icon = {
+                            Icon(
+                                imageVector = tab.icon,
+                                contentDescription = null
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = tab.label,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        },
                         colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = MaterialTheme.colorScheme.primaryContainer
+                            indicatorColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.85f),
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     )
                 }
@@ -96,17 +117,26 @@ fun AppRoot(viewModel: AppViewModel) {
             startDestination = MainTab.HOME.route,
             modifier = Modifier.padding(innerPadding),
             enterTransition = {
-                fadeIn(animationSpec = tween(280)) + slideInVertically(
+                fadeIn(
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessMediumLow,
+                        dampingRatio = Spring.DampingRatioNoBouncy
+                    )
+                ) + slideInVertically(
                     animationSpec = tween(280),
-                    initialOffsetY = { it / 14 }
+                    initialOffsetY = { it / 24 }
                 )
             },
-            exitTransition = { fadeOut(animationSpec = tween(200)) },
-            popEnterTransition = { fadeIn(animationSpec = tween(240)) },
+            exitTransition = {
+                fadeOut(animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                fadeIn(animationSpec = tween(240))
+            },
             popExitTransition = {
                 fadeOut(animationSpec = tween(200)) + slideOutVertically(
-                    animationSpec = tween(240),
-                    targetOffsetY = { it / 18 }
+                    animationSpec = tween(260),
+                    targetOffsetY = { it / 28 }
                 )
             }
         ) {
